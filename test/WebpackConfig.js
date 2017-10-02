@@ -359,13 +359,72 @@ describe('WebpackConfig object', () => {
     });
 
     describe('createSharedEntry', () => {
-        it('Calling twice throws an error', () => {
+        it('Calling it without a callback', () => {
             const config = createConfig();
-            config.createSharedEntry('vendor', 'jquery');
+            config.createSharedEntry('foo', 'bar');
 
+            expect(config.commonsChunks.length).to.equal(1);
+            expect(config.entries.get('foo')).to.equal('bar');
+        });
+
+        it('Calling it with a callback', () => {
+            const config = createConfig();
+            const callback = (options) => {
+                options.minChunks = 1;
+            };
+            config.createSharedEntry('foo', 'bar', callback);
+
+            expect(config.commonsChunks.length).to.equal(1);
+            expect(config.commonsChunks[0]).to.deep.equal({ name: 'foo', callback: callback });
+            expect(config.entries.get('foo')).to.equal('bar');
+        });
+
+        it('Calling it without any file', () => {
+            const config = createConfig();
+            const callback = (options) => {
+                options.minChunks = 1;
+            };
+            config.createSharedEntry('foo', [], callback);
+
+            expect(config.commonsChunks.length).to.equal(1);
+            expect(config.commonsChunks[0]).to.deep.equal({ name: 'foo', callback: callback });
+            expect(config.entries.has('foo')).to.be.false;
+        });
+
+        it('Calling it with multiple files', () => {
+            const config = createConfig();
+            config.createSharedEntry('foo', ['foo', 'bar']);
+
+            expect(config.commonsChunks.length).to.equal(1);
+            expect(config.entries.get('foo')).to.deep.equal(['foo', 'bar']);
+        });
+
+        it('Calling it multiple times', () => {
+            const config = createConfig();
+
+            const fooCallback = (options) => {
+                options.minChunks = 1;
+            };
+
+            const barCallback = (options) => {
+                options.minChunks = 2;
+            };
+
+            config.createSharedEntry('foo', 'foo.js', fooCallback);
+            config.createSharedEntry('bar', 'bar.js', barCallback);
+
+            expect(config.commonsChunks.length).to.equal(2);
+            expect(config.commonsChunks[0]).to.deep.equal({ name: 'foo', callback: fooCallback });
+            expect(config.commonsChunks[1]).to.deep.equal({ name: 'bar', callback: barCallback });
+            expect(config.entries.get('foo')).to.equal('foo.js');
+            expect(config.entries.get('bar')).to.equal('bar.js');
+        });
+
+        it('Calling it with an invalid callback', () => {
+            const config = createConfig();
             expect(() => {
-                config.createSharedEntry('vendor2', './main');
-            }).to.throw('cannot be called multiple');
+                config.createSharedEntry('vendor', 'jquery', 'foo');
+            }).to.throw('must be a callback function');
         });
     });
 

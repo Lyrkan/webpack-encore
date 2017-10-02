@@ -339,13 +339,33 @@ const publicApi = {
 
     /**
      * Add a "commons" file that holds JS shared by multiple chunks.
+     * A list of available options can be found at https://webpack.js.org/plugins/commons-chunk-plugin/
      *
-     * @param {string} name The chunk name (e.g. vendor to create a vendor.js)
-     * @param {Array}  files Array of files to put in the vendor entry
+     * Examples:
+     *
+     *      Encore.createSharedEntry('vendors', 'jquery')
+     *
+     *      Encore.createSharedEntry('vendors', ['jquery', 'bootstrap'])
+     *
+     *      Encore.createSharedEntry('vendors', ['pageA', 'pageB'], (options) => {
+     *          options.minChunks = 2;
+     *      })
+     *
+     *      Encore.createSharedEntry('admin', [], (options) => {
+     *          options.chunks = ['adminPageA', 'adminPageB'];
+     *      })
+     *
+     * @param {string} name        The chunk name (e.g. vendor to create a vendor.js)
+     * @param {string|Array} files A file or an array of files to put in the vendor entry.
+     *                             If an empty string or array is passed, no additional entry
+     *                             will be created. This can be useful if you only want the
+     *                             resulting chunk to be based on entries/chunks that already
+     *                             exist.
+     * @param {function} commonsChunkPluginCallback
      * @return {exports}
      */
-    createSharedEntry(name, files) {
-        webpackConfig.createSharedEntry(name, files);
+    createSharedEntry(name, files, commonsChunkPluginCallback = () => {}) {
+        webpackConfig.createSharedEntry(name, files, commonsChunkPluginCallback);
 
         return this;
     },
