@@ -498,7 +498,7 @@ describe('Functional tests using webpack', function() {
                         'bg.0ec2735b.css',
                         'manifest.json',
                         'entrypoints.json',
-                        'runtime.b84a9b43.js',
+                        'runtime.4126c3d1.js',
                     ]);
 
                 expect(path.join(config.outputPath, 'images')).to.be.a.directory()
