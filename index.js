@@ -15,7 +15,7 @@ const validator = require('./lib/config/validator');
 const PrettyError = require('pretty-error');
 const logger = require('./lib/logger');
 const parseRuntime = require('./lib/config/parse-runtime');
-const chalk = require('chalk');
+const chalk = require('chalk').default;
 const levenshtein = require('fast-levenshtein');
 const fs = require('fs');
 const path = require('path');
@@ -31,7 +31,7 @@ function initializeWebpackConfig() {
     // Display a warning if webpack is listed as a [dev-]dependency
     try {
         const packageInfo = JSON.parse(
-            fs.readFileSync(path.resolve(runtimeConfig.context, 'package.json'))
+            fs.readFileSync(path.resolve(runtimeConfig.context, 'package.json'), { encoding: 'utf8' })
         );
 
         if (packageInfo) {
@@ -1238,7 +1238,7 @@ class Encore {
 // if the webpackConfig object hasn't been initialized yet.
 const EncoreProxy = new Proxy(new Encore(), {
     get: (target, prop) => {
-        if (prop === '__esModule') {
+        if (typeof prop !== 'string' || prop === '__esModule') {
             // When using Babel to preprocess a webpack.config.babel.js file
             // (for instance if we want to use ES6 syntax) the __esModule
             // property needs to be whitelisted to avoid an "Unknown property"

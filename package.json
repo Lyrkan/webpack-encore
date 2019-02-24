@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --reporter spec test --recursive",
-    "lint": "eslint lib test index.js",
+    "lint": "yarn lint:eslint && yarn lint:types",
+    "lint:eslint": "eslint lib test index.js",
+    "lint:types": "tsc --pretty",
     "travis:lint": "npm run lint"
   },
   "bin": {
