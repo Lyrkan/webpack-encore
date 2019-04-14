@@ -510,7 +510,7 @@ describe('Functional tests using webpack', function() {
                             'bg.76e19b0d.css',
                             'manifest.json',
                             'entrypoints.json',
-                            'runtime.1abf2fed.js',
+                            'runtime.b2378e1c.js',
                         ]);
                 }
 
