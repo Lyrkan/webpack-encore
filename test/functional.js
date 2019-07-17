@@ -774,6 +774,10 @@ describe('Functional tests using webpack', function() {
                         other: {
                             js: ['/build/runtime.js', '/build/shared.js', '/build/other.js'],
                             css: ['/build/shared.css']
+                        },
+                        shared: {
+                            css: ['/build/shared.css'],
+                            js: ['/build/shared.js'],
                         }
                     }
                 });

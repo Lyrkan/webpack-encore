@@ -619,9 +619,9 @@ describe('The config-generator function', () => {
             const actualConfig = configGenerator(config);
             const plugins = actualConfig.plugins;
 
-            expect(plugins[plugins.length - 4]).to.be.instanceof(CustomPlugin1);
-            expect(plugins[plugins.length - 3]).to.be.instanceof(CustomPlugin2);
-            expect(plugins[plugins.length - 2]).to.be.instanceof(CustomPlugin3);
+            expect(plugins[plugins.length - 5]).to.be.instanceof(CustomPlugin1);
+            expect(plugins[plugins.length - 4]).to.be.instanceof(CustomPlugin2);
+            expect(plugins[plugins.length - 3]).to.be.instanceof(CustomPlugin3);
         });
 
         it('plugins can be sorted relatively to each other', () => {
