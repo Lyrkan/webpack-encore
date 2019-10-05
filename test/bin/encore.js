@@ -39,6 +39,7 @@ describe('bin/encore.js', function() {
             `
 const Encore = require('../../index.js');
 Encore
+    .enableSingleRuntimeChunk()
     .setOutputPath('build/')
     .setPublicPath('/build')
     .addEntry('main', './js/no_require')
@@ -69,6 +70,7 @@ module.exports = Encore.getWebpackConfig();
             `
 const Encore = require('../../index.js');
 Encore
+    .enableSingleRuntimeChunk()
     .setOutputPath('build/')
     .setPublicPath('/build')
     .addEntry('main', './js/no_require')
@@ -88,7 +90,13 @@ module.exports = Encore.getWebpackConfig();
 
             expect(parsedOutput).to.be.an('object');
             expect(parsedOutput.modules).to.be.an('array');
-            expect(parsedOutput.modules.length).to.equal(1);
+
+            // We expect 3 modules there:
+            // - webpack/runtime/jsonp chunk loading
+            // - webpack/runtime/hasOwnProperty shorthand
+            // - webpack/runtime/compat
+            // - ./js/no_require.js
+            expect(parsedOutput.modules.length).to.equal(4);
 
             done();
         });
@@ -103,6 +111,7 @@ module.exports = Encore.getWebpackConfig();
             `
 const Encore = require('../../index.js');
 Encore
+    .enableSingleRuntimeChunk()
     .setOutputPath('build/')
     .setPublicPath('/build')
     .addEntry('main', './js/no_require')
@@ -135,6 +144,7 @@ module.exports = Encore.getWebpackConfig();
             `
 const Encore = require('../../index.js');
 Encore
+    .enableSingleRuntimeChunk()
     .setOutputPath('build/')
     .setPublicPath('/build')
     .addEntry('main', './js/no_require')
@@ -173,6 +183,7 @@ module.exports = Encore.getWebpackConfig();
             `
 const Encore = require('../../index.js');
 Encore
+    .enableSingleRuntimeChunk()
     .setOutputPath('build/')
     .setPublicPath('/build')
     .addEntry('main', './js/no_require')
@@ -212,6 +223,7 @@ module.exports = Encore.getWebpackConfig();
             `
 const Encore = require('../../index.js');
 Encore
+    .enableSingleRuntimeChunk()
     .setOutputPath('build/')
     .setPublicPath('/build')
     .enableSingleRuntimeChuck()
