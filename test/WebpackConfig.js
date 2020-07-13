@@ -1044,7 +1044,7 @@ describe('WebpackConfig object', () => {
                 config.enableVueLoader(() => {}, {
                     notExisting: false,
                 });
-            }).to.throw('"notExisting" is not a valid key for enableVueLoader(). Valid keys: useJsx, version.');
+            }).to.throw('"notExisting" is not a valid key for enableVueLoader(). Valid keys: useJsx, version, runtimeCompilerBuild.');
         });
 
         it('Should set Encore-specific options', () => {
@@ -1054,6 +1054,7 @@ describe('WebpackConfig object', () => {
             });
 
             expect(config.vueOptions).to.deep.equal({
+                runtimeCompilerBuild: null,
                 useJsx: true,
                 version: null,
             });

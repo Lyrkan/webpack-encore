@@ -2,13 +2,16 @@
 
 ## 0.30.0
 
+ * ~~[BC BREAK] The Vue "build" was changed from `vue.esm.js` (full build) to `vue.runtime.esm.js` (runtime build)~~
+   This was reverted in Encore 0.30.1.
+
  * [DEPENDENCY UPGRADE] `sass-loader` was upgraded from version 7 to 8.
    See the [CHANGELOG](https://github.com/webpack-contrib/sass-loader/blob/master/CHANGELOG.md#800-2019-08-29)
    for breaking changes. This likely will not affect you unless pass
    custom options to `Encore.enableSassLoader()`: several options were
    moved or renamed - #758 thanks to @Kocal.
 
- * [BEHAVIOR CHANGE] Encore now resolves loaders directly form its
+ * [BEHAVIOR CHANGE] Encore now resolves loaders directly from its
    `node_modules/`, instead of by name. This change will cause a behavior
    change if you do any of the following:
 
